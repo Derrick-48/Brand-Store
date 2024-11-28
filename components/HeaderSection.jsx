@@ -1,3 +1,4 @@
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 
@@ -7,12 +8,12 @@ const HeaderSection = () => {
       <View style={styles.topRow}>
         <View>
           <TouchableOpacity>
-            <Image source={require("../assets/Menu.png")} />
+            <Ionicons name="menu" size={30} color={"black"} />
           </TouchableOpacity>
         </View>
         <View>
           <TouchableOpacity>
-            <Image source={require("../assets/Profile.png")} />
+            <Entypo name="circle" size={24} color="black" />
           </TouchableOpacity>
         </View>
       </View>

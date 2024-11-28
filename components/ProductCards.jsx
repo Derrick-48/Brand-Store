@@ -35,6 +35,30 @@ const products = [
     price: 257.85,
     name: "Leather Coat",
   },
+  {
+    id: "5",
+    image: require("../assets/image.jpg"), // Replace with the correct path to your image
+    price: 240.32,
+    name: "Tangerine Shirt",
+  },
+  {
+    id: "6",
+    image: require("../assets/image1.jpg"), // Replace with the correct path to your image
+    price: 325.36,
+    name: "Leather Coat",
+  },
+  {
+    id: "7",
+    image: require("../assets/image2.jpg"), // Replace with the correct path to your image
+    price: 126.47,
+    name: "Tangerine Shirt",
+  },
+  {
+    id: "8",
+    image: require("../assets/image3.jpg"), // Replace with the correct path to your image
+    price: 257.85,
+    name: "Leather Coat",
+  },
 ];
 
 // Product Card Component
@@ -67,19 +91,23 @@ export default function ProductGrid() {
       numColumns={2}
       columnWrapperStyle={styles.row}
       contentContainerStyle={styles.grid}
+      ListFooterComponent={<View style={{ height: 16 }} />}
+      showsVerticalScrollIndicator={false}
     />
   );
 }
 
 // Calculate dimensions
 const { width } = Dimensions.get("window");
-const CARD_MARGIN = 8;
-const CARD_WIDTH = (width - CARD_MARGIN * 4) / 2;
+const CARD_MARGIN = 10; // Adjusted margin
+const CARD_WIDTH = (width - CARD_MARGIN * 3) / 2;
 
 // Styles
 const styles = StyleSheet.create({
   grid: {
-    padding: CARD_MARGIN,
+    paddingHorizontal: CARD_MARGIN,
+    paddingTop: CARD_MARGIN,
+    paddingBottom: CARD_MARGIN * 4, // Ensure enough padding for last items
   },
   row: {
     justifyContent: "space-between",
@@ -90,6 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 12,
     overflow: "hidden",
+    elevation: 4, // Optional shadow for Android
   },
   imageContainer: {
     position: "relative",

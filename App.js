@@ -21,8 +21,8 @@ function Tabs() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarActiveTintColor: "#ff7a00", // Set active tab color to gold
-        tabBarInactiveTintColor: "gray", // Inactive tab color
+        tabBarActiveTintColor: "#ff7a00",
+        tabBarInactiveTintColor: "gray",
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
