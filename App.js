@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Text, View } from "react-native";
-import { createStaticNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import "./global.css";
+import Ionicons from "react-native-vector-icons/Ionicons"; // Import vector icons
 import Home from "./screens/Home";
 import Cart from "./screens/Cart";
 import Search from "./screens/Search";
@@ -13,60 +13,78 @@ import Signout from "./screens/Signout";
 import SignIn from "./screens/SignIn";
 import Signup from "./screens/Signup";
 
-const Tabs = createBottomTabNavigator({
-  screenOptions: {
-    headerShown: false,
-  },
-  screens: {
-    Home: Home,
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-    Search: Search,
-
-    Cart: Cart,
-
-    Settings: Setting,
-  },
-});
-
-const RootStack = createNativeStackNavigator({
-  screens: {
-    Tabs: {
-      screen: Tabs,
-      options: {
+function Tabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
         headerShown: false,
-      },
-    },
+        tabBarActiveTintColor: "#ff7a00", // Set active tab color to gold
+        tabBarInactiveTintColor: "gray", // Inactive tab color
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
 
-    Onboarding: {
-      screen: Onboarding,
-      options: {
-        headerShown: false,
-      },
-    },
+          if (route.name === "Home") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Search") {
+            iconName = focused ? "search" : "search-outline";
+          } else if (route.name === "Cart") {
+            iconName = focused ? "cart" : "cart-outline";
+          } else if (route.name === "Settings") {
+            iconName = focused ? "settings" : "settings-outline";
+          }
 
-    Signup: {
-      screen: Signup,
-      options: {
-        headerShown: false,
-      },
-    },
-    SignIn: {
-      screen: SignIn,
-      options: {
-        headerShown: false,
-      },
-    },
-    Signout: {
-      screen: Signout,
-      options: {
-        headerShown: false,
-      },
-    },
-  },
-});
+          // Return the icon component
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen name="Cart" component={Cart} />
+      <Tab.Screen name="Settings" component={Setting} />
+    </Tab.Navigator>
+  );
+}
 
-const Navigation = createStaticNavigation(RootStack);
+function RootStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Tabs"
+        component={Tabs}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Onboarding"
+        component={Onboarding}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Signout"
+        component={Signout}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 export default function App() {
-  return <Navigation />;
+  return (
+    <NavigationContainer>
+      <RootStack />
+    </NavigationContainer>
+  );
 }
