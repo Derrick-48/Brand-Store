@@ -26,7 +26,13 @@ const ProductCard = ({ item }) => {
       <View style={styles.imageContainer}>
         <Image source={item.image} style={styles.image} resizeMode="cover" />
         <View style={styles.iconContainer}>
-          <View style={styles.circle} />
+          <View style={styles.circle}>
+            <Image
+              source={item.image}
+              style={styles.circleImage}
+              resizeMode="cover"
+            />
+          </View>
         </View>
       </View>
       <View style={styles.details}>
@@ -46,7 +52,6 @@ const ProductGrid = () => {
       numColumns={2}
       columnWrapperStyle={styles.row}
       contentContainerStyle={styles.grid}
-      ListFooterComponent={<View style={{ height: 16 }} />}
       showsVerticalScrollIndicator={false}
     />
   );
@@ -62,9 +67,7 @@ const CARD_WIDTH = (width - CARD_MARGIN * 3) / 2;
 // Styles
 const styles = StyleSheet.create({
   grid: {
-    paddingHorizontal: CARD_MARGIN,
-    paddingTop: CARD_MARGIN,
-    paddingBottom: CARD_MARGIN * 4, // Ensure enough padding for last items
+    paddingHorizontal: 10,
   },
   row: {
     justifyContent: "space-between",
@@ -89,18 +92,23 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     position: "absolute",
-    bottom: 8,
     right: 8,
     backgroundColor: "#fff",
     borderRadius: 12,
     padding: 4,
+    marginTop: 164,
   },
   circle: {
     width: 24,
     height: 24,
-    borderRadius: 12,
-    borderWidth: 2,
+    borderRadius: 15, // Correct numeric value for a circle
+    borderWidth: 1,
     borderColor: "#000",
+    overflow: "hidden", // Ensure the child image stays within the circle
+  },
+  circleImage: {
+    width: "100%",
+    height: "100%",
   },
   details: {
     padding: 8,

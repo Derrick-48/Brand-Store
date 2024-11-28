@@ -8,76 +8,40 @@ import {
   FlatList,
   Image,
   SafeAreaView,
+  Platform,
+  StatusBar,
 } from "react-native";
-import { Search, Sliders, ChevronLeft } from "react-native-feather";
+import { Search, Sliders } from "react-native-feather";
 import CategoriesList from "../components/CategoriesList";
+import { products } from "../assets/data";
 
 const SearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([
-    {
-      id: "1",
-      name: "Premium Tagerine Shirt",
-      price: 257.85,
-      image: "/placeholder.svg",
-    },
-    {
-      id: "2",
-      name: "Leather Tagerine Coat",
-      price: 357.85,
-      image: "/placeholder.svg",
-    },
-    {
-      id: "3",
-      name: "Casual Denim Jacket",
-      price: 199.99,
-      image: "/placeholder.svg",
-    },
-    {
-      id: "4",
-      name: "Floral Summer Dress",
-      price: 149.99,
-      image: "/placeholder.svg",
-    },
-    {
-      id: "5",
-      name: "Classic White Sneakers",
-      price: 89.99,
-      image: "/placeholder.svg",
-    },
-    {
-      id: "6",
-      name: "Slim Fit Chino Pants",
-      price: 79.99,
-      image: "/placeholder.svg",
-    },
-  ]);
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    // Implement actual search logic here
-  };
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const renderSearchResult = ({ item }) => (
     <TouchableOpacity style={styles.resultItem}>
-      <Image source={{ uri: item.image }} style={styles.resultImage} />
-      <Text style={styles.resultName} numberOfLines={2}>
-        {item.name}
-      </Text>
-      <Text style={styles.resultPrice}>${item.price.toFixed(2)}</Text>
+      <Image source={item.image} style={styles.resultImage} />
+      <View style={styles.resultTextContainer}>
+        <Text style={styles.resultName} numberOfLines={2}>
+          {item.name}
+        </Text>
+        <Text style={styles.resultPrice}>${item.price.toFixed(2)}</Text>
+      </View>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
-          <ChevronLeft width={24} height={24} stroke="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Search</Text>
-        <View style={styles.placeholder} />
-      </View>
-
+    <SafeAreaView
+      style={[
+        styles.container,
+        { paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 },
+      ]}
+    >
+      {/* Search Bar */}
       <View style={styles.searchContainer}>
         <View style={styles.searchInputContainer}>
           <Search
@@ -89,25 +53,37 @@ const SearchScreen = () => {
           <TextInput
             style={styles.searchInput}
             placeholder="Search for items..."
+            placeholderTextColor="#aaa"
             value={searchQuery}
-            onChangeText={handleSearch}
+            onChangeText={setSearchQuery}
           />
         </View>
         <TouchableOpacity style={styles.filterButton}>
-          <Sliders width={20} height={20} stroke="#FF6B00" />
+          <Sliders width={24} height={24} stroke="#FF6B00" />
         </TouchableOpacity>
       </View>
 
+      {/* Categories */}
       <CategoriesList />
 
-      <FlatList
-        data={searchResults}
-        renderItem={renderSearchResult}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.resultRow}
-        contentContainerStyle={styles.resultList}
-      />
+      {/* Search Results */}
+      {filteredProducts.length > 0 ? (
+        <FlatList
+          data={filteredProducts}
+          renderItem={renderSearchResult}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          columnWrapperStyle={styles.resultRow}
+          contentContainerStyle={styles.resultList}
+          showsVerticalScrollIndicator={false}
+        />
+      ) : (
+        <View style={styles.noResults}>
+          <Text style={styles.noResultsText}>
+            No results found for "{searchQuery}".
+          </Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -115,74 +91,46 @@ const SearchScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f0f0f0",
-  },
-  backButton: {
-    padding: 5,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "500",
-  },
-  placeholder: {
-    width: 24,
+    backgroundColor: "#f9f9f9",
   },
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
+    marginHorizontal: 16,
+    marginVertical: 12,
   },
   searchInputContainer: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#fff",
     borderRadius: 25,
     paddingHorizontal: 15,
-    marginRight: 10,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   searchIcon: {
     marginRight: 10,
   },
   searchInput: {
     flex: 1,
-    height: 40,
+    height: 45,
     fontSize: 16,
+    color: "#333",
   },
   filterButton: {
+    marginLeft: 10,
     padding: 10,
-  },
-  filterChips: {
-    flexDirection: "row",
-    paddingHorizontal: 20,
-    paddingBottom: 15,
-  },
-  filterChip: {
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: "#f5f5f5",
-    marginRight: 10,
-  },
-  activeFilterChip: {
-    backgroundColor: "#FF6B00",
-  },
-  filterChipText: {
-    fontSize: 14,
-    color: "#666",
-  },
-  activeFilterChipText: {
-    color: "#fff",
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   resultList: {
     paddingHorizontal: 10,
@@ -192,10 +140,10 @@ const styles = StyleSheet.create({
   },
   resultItem: {
     width: "48%",
-    marginBottom: 20,
     backgroundColor: "#fff",
     borderRadius: 8,
     overflow: "hidden",
+    marginBottom: 20,
     elevation: 2,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -207,19 +155,28 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: "cover",
   },
+  resultTextContainer: {
+    padding: 10,
+  },
   resultName: {
     fontSize: 14,
     fontWeight: "500",
-    marginTop: 8,
-    marginHorizontal: 8,
+    color: "#333",
   },
   resultPrice: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "600",
     color: "#FF6B00",
-    marginTop: 4,
-    marginBottom: 8,
-    marginHorizontal: 8,
+    marginTop: 5,
+  },
+  noResults: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noResultsText: {
+    fontSize: 16,
+    color: "#666",
   },
 });
 
