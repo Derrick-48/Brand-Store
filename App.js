@@ -12,6 +12,7 @@ import Onboarding from "./screens/Onboarding";
 import Signout from "./screens/Signout";
 import SignIn from "./screens/SignIn";
 import Signup from "./screens/Signup";
+import ProductDetails from "./screens/ProductDetails";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -70,6 +71,11 @@ function RootStack() {
       <Stack.Screen
         name="SignIn"
         component={SignIn}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProductDetails"
+        component={ProductDetails}
         options={{ headerShown: false }}
       />
       <Stack.Screen

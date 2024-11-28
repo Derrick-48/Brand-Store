@@ -21,6 +21,24 @@ const Search = ({ navigation }) => {
         >
           <Text className="text-white font-bold">Go to Onboarding</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SignIn")} // Navigate to the onboarding screen
+          className="px-4 py-2 bg-blue-500 rounded-full"
+        >
+          <Text className="text-white font-bold">Go to Sign IN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Signup")} // Navigate to the onboarding screen
+          className="px-4 py-2 bg-blue-500 rounded-full"
+        >
+          <Text className="text-white font-bold">Go to Sign UP</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ProductDetails")} // Navigate to the onboarding screen
+          className="px-4 py-2 bg-blue-500 rounded-full"
+        >
+          <Text className="text-white font-bold">Go to Product Details</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
