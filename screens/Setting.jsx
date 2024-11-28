@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   View,
@@ -55,7 +56,7 @@ const SettingItem = ({ icon, title, value, onPress, toggleSwitch }) => (
 export default function SettingsScreen() {
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
-
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -138,7 +139,7 @@ export default function SettingsScreen() {
             }),
           ]}
           onPress={() => {
-            /* Handle Logout */
+            navigation.navigate("SignIn");
           }}
         >
           <LogOut stroke="#FF6B00" width={20} height={24} />
@@ -214,6 +215,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    width: "60%",
+    marginLeft: 100,
     marginTop: 30,
     marginBottom: 20,
     paddingVertical: 15,

@@ -9,7 +9,6 @@ import Cart from "./screens/Cart";
 import Search from "./screens/Search";
 import Setting from "./screens/Setting";
 import Onboarding from "./screens/Onboarding";
-import Signout from "./screens/Signout";
 import SignIn from "./screens/SignIn";
 import Signup from "./screens/Signup";
 import ProductDetails from "./screens/ProductDetails";
@@ -90,11 +89,6 @@ function RootStack() {
         <Stack.Screen
           name="Checkout"
           component={CheckoutScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Signout"
-          component={Signout}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

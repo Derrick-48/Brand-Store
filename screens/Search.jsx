@@ -14,16 +14,23 @@ import {
 import { Search, Sliders } from "react-native-feather";
 import CategoriesList from "../components/CategoriesList";
 import { products } from "../assets/data";
+import { useNavigation } from "@react-navigation/native";
 
 const SearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const navigation = useNavigation();
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const renderSearchResult = ({ item }) => (
-    <TouchableOpacity style={styles.resultItem}>
+    <TouchableOpacity
+      style={styles.resultItem}
+      onPress={() =>
+        navigation.navigate("ProductDetails", { productId: item.id })
+      }
+    >
       <Image source={item.image} style={styles.resultImage} />
       <View style={styles.resultTextContainer}>
         <Text style={styles.resultName} numberOfLines={2}>

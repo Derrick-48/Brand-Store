@@ -25,14 +25,6 @@ export default function LoginPage() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboardAvoidingView}
       >
-        <View style={styles.header}>
-          <TouchableOpacity>
-            <Text style={styles.backButton}>{"<"}</Text>
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Login</Text>
-          <View style={styles.placeholder} />
-        </View>
-
         <View style={styles.formContainer}>
           <Text style={styles.welcomeText}>Welcome back!</Text>
           <Text style={styles.subText}>Please sign in to your account</Text>
@@ -88,19 +80,9 @@ const styles = StyleSheet.create({
   keyboardAvoidingView: {
     flex: 1,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-  },
   headerTitle: {
     fontSize: 18,
     fontWeight: "500",
-  },
-  backButton: {
-    fontSize: 24,
   },
   placeholder: {
     width: 24,
