@@ -1,6 +1,7 @@
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import { Grid } from "react-native-feather";
 
 const HeaderSection = () => {
   return (
@@ -8,7 +9,7 @@ const HeaderSection = () => {
       <View style={styles.topRow}>
         <View>
           <TouchableOpacity>
-            <Ionicons name="menu" size={30} color={"black"} />
+            <Grid name="menu" size={30} color={"black"} />
           </TouchableOpacity>
         </View>
         <View>

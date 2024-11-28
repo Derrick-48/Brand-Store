@@ -7,43 +7,60 @@ import {
   SafeAreaView,
   Image,
 } from "react-native";
+import { products } from "../assets/data"; // Import product data
+import { ArrowLeft, Bookmark } from "react-native-feather";
+import { useCart } from "../components/CartContext"; // Import the custom hook
+import Toast from "react-native-toast-message"; // Import toast
 
-const ProductDetails = () => {
+const ProductDetails = ({ route }) => {
+  const { productId } = route.params;
+  const product = products.find((p) => p.id === productId);
   const sizes = ["S", "M", "L", "XL", "XXL"];
   const [selectedSize, setSelectedSize] = React.useState("L");
+  const [quantity, setQuantity] = React.useState(1); // Track the quantity
+
+  const { addToCart } = useCart(); // Get the addToCart function from context
+
+  const handleAddToCart = () => {
+    const cartProduct = {
+      ...product,
+      image: Image.resolveAssetSource(product.image).uri, // Ensure image is in URI format
+      size: selectedSize,
+      quantity,
+    };
+    addToCart(cartProduct);
+    Toast.show({
+      type: "success",
+      position: "bottom",
+      text1: "Added to Cart",
+      text2: `${product.name} x${quantity} has been added to your cart.`,
+      visibilityTime: 3000,
+      autoHide: true,
+    });
+  };
+
+  const increaseQuantity = () => setQuantity(quantity + 1); // Increase quantity
+  const decreaseQuantity = () => setQuantity(Math.max(quantity - 1, 1)); // Decrease quantity (minimum 1)
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity>
-          <Text style={styles.backButton}>{"<"}</Text>
+          <ArrowLeft color={"black"} size={24} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Details</Text>
         <TouchableOpacity>
-          <Text style={styles.bookmarkIcon}>☆</Text>
+          <Bookmark color={"black"} size={24} />
         </TouchableOpacity>
       </View>
 
-      {/* Product Image */}
-      <Image
-        source={{ uri: "/placeholder.svg" }}
-        style={styles.productImage}
-        resizeMode="cover"
-      />
+      <Image source={product.image} style={styles.productImage} />
 
-      {/* Product Info */}
       <View style={styles.productInfo}>
         <View style={styles.titleContainer}>
-          <Text style={styles.productTitle}>Premium Tagerine Shirt</Text>
-          <View style={styles.variantContainer}>
-            {[1, 2, 3].map((variant) => (
-              <View key={variant} style={styles.variantDot} />
-            ))}
-          </View>
+          <Text style={styles.productTitle}>{product.name}</Text>
         </View>
 
-        {/* Size Selector */}
         <Text style={styles.sizeLabel}>Size</Text>
         <View style={styles.sizeContainer}>
           {sizes.map((size) => (
@@ -67,14 +84,40 @@ const ProductDetails = () => {
           ))}
         </View>
 
-        {/* Price and Add to Cart */}
+        <View style={styles.quantityContainer}>
+          <Text style={styles.quantityLabel}>Quantity</Text>
+          <View style={styles.quantityControl}>
+            <TouchableOpacity
+              onPress={decreaseQuantity}
+              style={styles.quantityButton}
+            >
+              <Text style={styles.quantityButtonText}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.quantityText}>{quantity}</Text>
+            <TouchableOpacity
+              onPress={increaseQuantity}
+              style={styles.quantityButton}
+            >
+              <Text style={styles.quantityButtonText}>+</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
         <View style={styles.bottomContainer}>
-          <Text style={styles.price}>$257.85</Text>
-          <TouchableOpacity style={styles.addToCartButton}>
+          <Text style={styles.price}>
+            ${(product.price * quantity).toFixed(2)}
+          </Text>
+          <TouchableOpacity
+            style={styles.addToCartButton}
+            onPress={handleAddToCart}
+          >
             <Text style={styles.addToCartText}>Add To Cart</Text>
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* Toast component */}
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </SafeAreaView>
   );
 };
@@ -95,16 +138,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "500",
   },
-  backButton: {
-    fontSize: 24,
-  },
-  bookmarkIcon: {
-    fontSize: 24,
-  },
   productImage: {
-    width: "100%",
+    width: "95%",
     height: 400,
-    backgroundColor: "#f5f5f5",
+    paddingLeft: 40,
+    borderRadius: 30,
   },
   productInfo: {
     padding: 20,
@@ -118,16 +156,6 @@ const styles = StyleSheet.create({
   productTitle: {
     fontSize: 24,
     fontWeight: "bold",
-  },
-  variantContainer: {
-    flexDirection: "row",
-    gap: 8,
-  },
-  variantDot: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: "#ddd",
   },
   sizeLabel: {
     fontSize: 18,
@@ -156,6 +184,34 @@ const styles = StyleSheet.create({
   },
   selectedSizeText: {
     color: "#fff",
+  },
+  quantityContainer: {
+    marginBottom: 30,
+  },
+  quantityLabel: {
+    fontSize: 18,
+    fontWeight: "500",
+    marginBottom: 10,
+  },
+  quantityControl: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  quantityButton: {
+    width: 40,
+    height: 40,
+    backgroundColor: "#f5f5f5",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+  },
+  quantityButtonText: {
+    fontSize: 24,
+    fontWeight: "500",
+  },
+  quantityText: {
+    fontSize: 18,
+    marginHorizontal: 20,
   },
   bottomContainer: {
     flexDirection: "row",
