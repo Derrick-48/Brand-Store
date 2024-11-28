@@ -8,81 +8,36 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation
 
-// Sample data with local images
-const products = [
-  {
-    id: "1",
-    image: require("../assets/image.jpg"), // Replace with the correct path to your image
-    price: 240.32,
-    name: "Tangerine Shirt",
-  },
-  {
-    id: "2",
-    image: require("../assets/image1.jpg"), // Replace with the correct path to your image
-    price: 325.36,
-    name: "Leather Coat",
-  },
-  {
-    id: "3",
-    image: require("../assets/image2.jpg"), // Replace with the correct path to your image
-    price: 126.47,
-    name: "Tangerine Shirt",
-  },
-  {
-    id: "4",
-    image: require("../assets/image3.jpg"), // Replace with the correct path to your image
-    price: 257.85,
-    name: "Leather Coat",
-  },
-  {
-    id: "5",
-    image: require("../assets/image.jpg"), // Replace with the correct path to your image
-    price: 240.32,
-    name: "Tangerine Shirt",
-  },
-  {
-    id: "6",
-    image: require("../assets/image1.jpg"), // Replace with the correct path to your image
-    price: 325.36,
-    name: "Leather Coat",
-  },
-  {
-    id: "7",
-    image: require("../assets/image2.jpg"), // Replace with the correct path to your image
-    price: 126.47,
-    name: "Tangerine Shirt",
-  },
-  {
-    id: "8",
-    image: require("../assets/image3.jpg"), // Replace with the correct path to your image
-    price: 257.85,
-    name: "Leather Coat",
-  },
-];
+// Import the products data from the data.js file
+import { products } from "../assets/data";
 
-// Product Card Component
-const ProductCard = ({ item }) => (
-  <TouchableOpacity style={styles.card}>
-    <View style={styles.imageContainer}>
-      <Image
-        source={item.image} // Use the local image source
-        style={styles.image}
-        resizeMode="cover"
-      />
-      <View style={styles.iconContainer}>
-        <View style={styles.circle} />
+const ProductCard = ({ item }) => {
+  const navigation = useNavigation(); // Hook to use navigation
+
+  return (
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() =>
+        navigation.navigate("ProductDetails", { productId: item.id })
+      }
+    >
+      <View style={styles.imageContainer}>
+        <Image source={item.image} style={styles.image} resizeMode="cover" />
+        <View style={styles.iconContainer}>
+          <View style={styles.circle} />
+        </View>
       </View>
-    </View>
-    <View style={styles.details}>
-      <Text style={styles.price}>${item.price.toFixed(2)}</Text>
-      <Text style={styles.name}>{item.name}</Text>
-    </View>
-  </TouchableOpacity>
-);
+      <View style={styles.details}>
+        <Text style={styles.price}>${item.price.toFixed(2)}</Text>
+        <Text style={styles.name}>{item.name}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
-// Main Component
-export default function ProductGrid() {
+const ProductGrid = () => {
   return (
     <FlatList
       data={products}
@@ -95,7 +50,9 @@ export default function ProductGrid() {
       showsVerticalScrollIndicator={false}
     />
   );
-}
+};
+
+export default ProductGrid;
 
 // Calculate dimensions
 const { width } = Dimensions.get("window");

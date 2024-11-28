@@ -13,6 +13,9 @@ import Signout from "./screens/Signout";
 import SignIn from "./screens/SignIn";
 import Signup from "./screens/Signup";
 import ProductDetails from "./screens/ProductDetails";
+import SettingsScreen from "./screens/Setting";
+import { CartProvider } from "./components/CartContext";
+import CheckoutScreen from "./screens/Checkout";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -52,38 +55,50 @@ function Tabs() {
 
 function RootStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Tabs"
-        component={Tabs}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Onboarding"
-        component={Onboarding}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Signup"
-        component={Signup}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="SignIn"
-        component={SignIn}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ProductDetails"
-        component={ProductDetails}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Signout"
-        component={Signout}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    <CartProvider>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Tabs"
+          component={Tabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Onboarding"
+          component={Onboarding}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ProductDetails"
+          component={ProductDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Setting"
+          component={SettingsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Checkout"
+          component={CheckoutScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Signout"
+          component={Signout}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </CartProvider>
   );
 }
 
