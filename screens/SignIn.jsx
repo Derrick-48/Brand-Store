@@ -51,6 +51,7 @@ export default function Signin() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboardAvoidingView}
       >
+<<<<<<< HEAD
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.navigate("Onboarding")}>
             <Text style={styles.backButton}>{"<"}</Text>
@@ -59,6 +60,8 @@ export default function Signin() {
           <View style={styles.placeholder} />
         </View>
 
+=======
+>>>>>>> 3d812275297a12992d50b1f9bca454cd633b7e60
         <View style={styles.formContainer}>
           <Text style={styles.welcomeText}>Welcome back!</Text>
           <Text style={styles.subText}>Please sign in to your account</Text>
@@ -114,19 +117,9 @@ const styles = StyleSheet.create({
   keyboardAvoidingView: {
     flex: 1,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-  },
   headerTitle: {
     fontSize: 18,
     fontWeight: "500",
-  },
-  backButton: {
-    fontSize: 24,
   },
   placeholder: {
     width: 24,

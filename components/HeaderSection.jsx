@@ -1,9 +1,11 @@
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { Grid } from "react-native-feather";
+import { Grid, Search } from "react-native-feather";
+import { useNavigation } from "@react-navigation/native";
 
 const HeaderSection = () => {
+  const navigation = useNavigation();
   return (
     <>
       <View style={styles.topRow}>
@@ -13,8 +15,8 @@ const HeaderSection = () => {
           </TouchableOpacity>
         </View>
         <View>
-          <TouchableOpacity>
-            <Entypo name="circle" size={24} color="black" />
+          <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+            <Search size={24} color="black" />
           </TouchableOpacity>
         </View>
       </View>

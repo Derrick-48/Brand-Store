@@ -9,11 +9,9 @@ const Home = () => {
   //setting State for active and inactive labels
   return (
     <SafeAreaView className="bg-white h-screen">
-      <>
-        <HeaderSection />
-        <CategoriesList />
-        <ProductGrid />
-      </>
+      <HeaderSection />
+      <CategoriesList />
+      <ProductGrid />
     </SafeAreaView>
   );
 };
