@@ -14,6 +14,7 @@ import {
   createStaticNavigation,
   useNavigation,
 } from "@react-navigation/native";
+import { Image } from "react-native";
 
 export default function Signin() {
   const [email, setEmail] = useState("");

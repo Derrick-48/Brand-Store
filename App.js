@@ -16,7 +16,6 @@ import SettingsScreen from "./screens/Setting";
 import { CartProvider } from "./components/CartContext";
 import CheckoutScreen from "./screens/Checkout";
 
-
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
