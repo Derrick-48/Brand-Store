@@ -17,6 +17,7 @@ import SettingsScreen from "./screens/Setting";
 import { CartProvider } from "./components/CartContext";
 import CheckoutScreen from "./screens/Checkout";
 
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -58,15 +59,16 @@ function RootStack() {
     <CartProvider>
       <Stack.Navigator>
         <Stack.Screen
-          name="Tabs"
-          component={Tabs}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
           name="Onboarding"
           component={Onboarding}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="Tabs"
+          component={Tabs}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           name="Signup"
           component={Signup}

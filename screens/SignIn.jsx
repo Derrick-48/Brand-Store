@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,13 +9,39 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { auth } from "../firebase";
+import {
+  createStaticNavigation,
+  useNavigation,
+} from "@react-navigation/native";
 
-export default function LoginPage() {
+
+
+export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+    const navigation = useNavigation();
 
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace("Tabs");
+      }
+    });
+
+    return unsubscribe;
+  }, []);
   const handleLogin = () => {
     // Implement login logic here
+     auth
+       .signInWithEmailAndPassword(email, password)
+       .then((userCredentials) => {
+         const user = userCredentials.user;
+         console.log("Logged in with:", user.email);
+       })
+       .catch((error) => alert(error.message));
+   
     console.log("Login attempted with:", email, password);
   };
 
@@ -26,7 +52,7 @@ export default function LoginPage() {
         style={styles.keyboardAvoidingView}
       >
         <View style={styles.header}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Onboarding")}>
             <Text style={styles.backButton}>{"<"}</Text>
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Login</Text>
@@ -70,7 +96,7 @@ export default function LoginPage() {
 
           <View style={styles.signupContainer}>
             <Text style={styles.signupText}>Don't have an account? </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
               <Text style={styles.signupLink}>Sign Up</Text>
             </TouchableOpacity>
           </View>

@@ -12,7 +12,7 @@ import image from "../assets/image.jpg";
 // Get screen dimensions
 const { width } = Dimensions.get("window");
 
-export default function OnboardingScreen() {
+export default function OnboardingScreen ({navigation})  {
   return (
     <View style={styles.container}>
       {/* Image Section */}
@@ -30,10 +30,16 @@ export default function OnboardingScreen() {
 
         {/* Buttons Section */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.signUpButton}>
+          <TouchableOpacity
+            style={styles.signUpButton}
+            onPress={() => navigation.navigate("Signup")}
+          >
             <Text style={styles.signUpButtonText}>Sign Up</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.signInButton}>
+          <TouchableOpacity
+            style={styles.signInButton}
+            onPress={() => navigation.navigate("SignIn")}
+          >
             <Text style={styles.signInButtonText}>Sign In</Text>
           </TouchableOpacity>
         </View>

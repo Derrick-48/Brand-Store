@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   View,
   Text,
@@ -10,15 +10,45 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
+import {
+  createStaticNavigation,
+  useNavigation,
+} from "@react-navigation/native";
+import { auth } from "../firebase";
+
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+ const navigation = useNavigation();
+   useEffect(() => {
+     const unsubscribe = auth.onAuthStateChanged((user) => {
+       if (user) {
+         navigation.replace("Tabs");
+       }
+     });
+
+     return unsubscribe;
+   }, []);
 
   const handleSignUp = () => {
     // Implement sign up logic here
+
+  if (password !== confirmPassword) {
+    alert("Passwords do not match. Please try again.");
+    return; // Exit the function if passwords don't match
+  }
+  auth
+    .createUserWithEmailAndPassword(email, password)
+    .then((userCredentials) => {
+      const user = userCredentials.user;
+      console.log("Registered with:", user.email);
+    })
+    .catch((error) => alert(error.message));
+
+
     console.log("Sign up attempted with:", {
       name,
       email,
@@ -93,7 +123,7 @@ export default function SignUpPage() {
 
             <View style={styles.loginContainer}>
               <Text style={styles.loginText}>Already have an account? </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
                 <Text style={styles.loginLink}>Login</Text>
               </TouchableOpacity>
             </View>
