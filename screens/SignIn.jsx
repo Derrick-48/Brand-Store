@@ -15,13 +15,10 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 
-
-
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-    const navigation = useNavigation();
-
+  const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -34,14 +31,14 @@ export default function Signin() {
   }, []);
   const handleLogin = () => {
     // Implement login logic here
-     auth
-       .signInWithEmailAndPassword(email, password)
-       .then((userCredentials) => {
-         const user = userCredentials.user;
-         console.log("Logged in with:", user.email);
-       })
-       .catch((error) => alert(error.message));
-   
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Logged in with:", user.email);
+      })
+      .catch((error) => alert(error.message));
+
     console.log("Login attempted with:", email, password);
   };
 
@@ -51,17 +48,6 @@ export default function Signin() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboardAvoidingView}
       >
-<<<<<<< HEAD
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate("Onboarding")}>
-            <Text style={styles.backButton}>{"<"}</Text>
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Login</Text>
-          <View style={styles.placeholder} />
-        </View>
-
-=======
->>>>>>> 3d812275297a12992d50b1f9bca454cd633b7e60
         <View style={styles.formContainer}>
           <Text style={styles.welcomeText}>Welcome back!</Text>
           <Text style={styles.subText}>Please sign in to your account</Text>
