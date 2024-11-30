@@ -62,7 +62,7 @@ export default ProductGrid;
 // Calculate dimensions
 const { width } = Dimensions.get("window");
 const CARD_MARGIN = 10; // Adjusted margin
-const CARD_WIDTH = (width - CARD_MARGIN * 3) / 2;
+const CARD_WIDTH = (width - CARD_MARGIN * 3) 
 
 // Styles
 const styles = StyleSheet.create({
