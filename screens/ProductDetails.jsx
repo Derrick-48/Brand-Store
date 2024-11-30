@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
+  Platform,
 } from "react-native";
 import { products } from "../assets/data"; // Import product data
 import { ArrowLeft, Bookmark } from "react-native-feather";
@@ -126,6 +127,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    paddingTop: Platform.OS === "android" ? 25 : 0, // Adjust for Android status bar
   },
   header: {
     flexDirection: "row",
@@ -139,10 +141,11 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   productImage: {
-    width: "95%",
+    width: "90%",
     height: 400,
-    paddingLeft: 40,
+    alignSelf: "center", // Align image in the center
     borderRadius: 30,
+    marginLeft: Platform.OS === "android" ? 10 : 0, // Add margin for Android
   },
   productInfo: {
     padding: 20,
