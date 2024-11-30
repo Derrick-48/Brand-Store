@@ -8,13 +8,13 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { useNavigation } from "@react-navigation/native";
 
 // Import the products data from the data.js file
 import { products } from "../assets/data";
 
 const ProductCard = ({ item }) => {
-  const navigation = useNavigation(); // Hook to use navigation
+  const navigation = useNavigation();
 
   return (
     <TouchableOpacity
@@ -48,7 +48,7 @@ const ProductGrid = () => {
     <FlatList
       data={products}
       renderItem={({ item }) => <ProductCard item={item} />}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.id.toString()}
       numColumns={2}
       columnWrapperStyle={styles.row}
       contentContainerStyle={styles.grid}
@@ -61,13 +61,13 @@ export default ProductGrid;
 
 // Calculate dimensions
 const { width } = Dimensions.get("window");
-const CARD_MARGIN = 10; // Adjusted margin
-const CARD_WIDTH = (width - CARD_MARGIN * 3) 
+const CARD_MARGIN = 12; // Adjusted margin for better spacing
+const CARD_WIDTH = (width - CARD_MARGIN * 3) / 2;
 
 // Styles
 const styles = StyleSheet.create({
   grid: {
-    paddingHorizontal: 10,
+    paddingHorizontal: CARD_MARGIN,
   },
   row: {
     justifyContent: "space-between",
@@ -76,14 +76,18 @@ const styles = StyleSheet.create({
     width: CARD_WIDTH,
     marginBottom: CARD_MARGIN * 2,
     backgroundColor: "#fff",
-    borderRadius: 12,
+    borderRadius: 16,
     overflow: "hidden",
-    elevation: 4, // Optional shadow for Android
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 5, // Adds shadow for Android
   },
   imageContainer: {
     position: "relative",
-    aspectRatio: 1,
-    borderRadius: 12,
+    aspectRatio: 1, // Ensures square images
+    borderRadius: 16,
     overflow: "hidden",
   },
   image: {
@@ -92,35 +96,36 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     position: "absolute",
+    bottom: 8,
     right: 8,
     backgroundColor: "#fff",
-    borderRadius: 12,
+    borderRadius: 24,
     padding: 4,
-    marginTop: 164,
+    elevation: 2,
   },
   circle: {
-    width: 24,
-    height: 24,
-    borderRadius: 15, // Correct numeric value for a circle
+    width: 28,
+    height: 28,
+    borderRadius: 14, // Proper circular shape
     borderWidth: 1,
-    borderColor: "#000",
-    overflow: "hidden", // Ensure the child image stays within the circle
+    borderColor: "#ddd",
+    overflow: "hidden",
   },
   circleImage: {
     width: "100%",
     height: "100%",
   },
   details: {
-    padding: 8,
+    padding: 12,
   },
   price: {
     fontSize: 16,
-    fontWeight: "600",
-    color: "#000",
+    fontWeight: "700",
+    color: "#333",
   },
   name: {
     fontSize: 14,
-    color: "#666",
+    color: "#777",
     marginTop: 4,
   },
 });
